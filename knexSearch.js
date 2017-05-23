@@ -8,8 +8,7 @@ var pg = require('knex')({
     user: settings.user,
     password: settings.password,
     database: settings.database
-  },
-  searchPath: 'knex,public'
+  }
 });
 
 pg.select().where('first_name', name).orWhere('last_name', name).from('famous_people').asCallback(function (err, rows) {
