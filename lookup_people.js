@@ -20,12 +20,15 @@ client.connect((err) => {
     if (err) {
       return console.error("error running query", err);
     }
-    console.log("Found " + result.rows.length + " person(s) by the name '" + name + "':")
-    for (i=0; i<result.rows.length; i++) {
-      console.log ('- ' + (i+1) + ' ' + result.rows[i].first_name + ' ' + result.rows[i].last_name + ', born ' + "'"+ ('' + result.rows[0].birthdate).split(' 00:00:00')[0] +"'")
-    }
+    formatResults(result.rows);
+
     client.end();
   });
 });
 
-//.split(' 00:00:00')[0]
+const formatResults = function(result) {
+  console.log(`Found ${result.length} person(s) by the name '${name}'`)
+  for (i=0; i<result.length; i++) {
+    console.log (`- ${(i+1)} ${result[i].first_name} ${result[i].last_name}, born '${result[i].birthdate.toString().split(' ').slice(0, 4).join(' ')}'`);
+  }
+};
